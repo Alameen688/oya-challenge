@@ -36,4 +36,14 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    /*
+     * Overide the username function in AuthenticatesUsers trait 
+     * to make the field to check for in db phone_number and not the default email
+     * So phone_number and password for login
+     */
+    public function username()
+    {
+        return 'phone_number';
+    }
 }
