@@ -13,7 +13,14 @@ class AgentController extends Controller
     //
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->only(['inviteAgent', 'storeAgentInvite']);
+
+        /*only guest i.e logged out users should be able to access the create agent form
+        /since you can be logged in when creating a new account (agent account) 
+        /and also it's is not the logged in admin that will create the account
+        /hence you can't be logged in.
+        */
+        $this->middleware('guest')->only(['showForm', 'createAgent']);
     }
 
     public function inviteAgent()
@@ -40,6 +47,11 @@ class AgentController extends Controller
         return redirect()->home();
     }
 
+    /**
+     * Logged in Admin user will be logged out when trying to access this form via the link
+     * This is because ideally when the link is sent to the invited agent via sms they would currently be logged out
+     * 
+     */
     public function showForm()
     {
         //no needed to do urldecode on the encoded token, query does it automatically
