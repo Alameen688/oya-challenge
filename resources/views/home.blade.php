@@ -14,7 +14,9 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    <h3>Agents <small>List</small></h3>
+                    <div><p>Add a <a href="/agent/new">new agent</a>.</p></div>
+                    <hr/>
                 </div>
             </div>
         </div>
