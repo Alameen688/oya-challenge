@@ -48,6 +48,7 @@ class AgentController extends Controller
     }
 
     /**
+     * For the purpose of testing 
      * Logged in Admin user will be logged out when trying to access this form via the link
      * This is because ideally when the link is sent to the invited agent via sms they would currently be logged out
      * 
