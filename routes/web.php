@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+/* auto generates all routes relating to authentication
+ * register
+ * login
+ */
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

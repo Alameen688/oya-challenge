@@ -25,7 +25,7 @@ class AgentController extends Controller
     {
         $this->validate(request(),[
             'name' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:255|unique:users',
+            'phone_number' => 'required|string|max:255|unique:invites',
         ]);
 
         //save to invite db and use agents phone number to generate token
@@ -55,7 +55,7 @@ class AgentController extends Controller
 
             request()->session()->flash('status', 'Sorry! Token is invalid');
             return redirect('/info/error');
-            
+
         }
         $status = $agentInvite->status;
         return view('create-agent', compact('status','agentInvite'));
