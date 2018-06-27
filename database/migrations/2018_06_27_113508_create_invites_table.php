@@ -16,8 +16,9 @@ class CreateInvitesTable extends Migration
         Schema::create('invites', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('phone_number');
+            $table->string('phone_number')->unique();
             $table->string('token');
+            $table->enum('status', ['pending', 'completed']);
             $table->timestamps();
         });
     }

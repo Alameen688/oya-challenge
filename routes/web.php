@@ -19,6 +19,12 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/agent/new', 'AgentController@createAgent');
+Route::get('/agent/invite', 'AgentController@inviteAgent');
 
-Route::post('/agent/new', 'AgentController@storeAgent');
+Route::get('/invite/agent/{name}', 'AgentController@showForm');
+
+Route::get('/info/{status}', 'HomeController@showStatus');
+
+Route::post('/agent/invite', 'AgentController@storeAgentInvite');
+
+Route::post('/agent/new', 'AgentController@createAgent');

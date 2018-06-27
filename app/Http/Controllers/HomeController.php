@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Invite;
 
 class HomeController extends Controller
 {
@@ -13,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('showStatus');
     }
 
     /**
@@ -23,6 +24,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $invites = Invite::latest()->get();
+        return view('home', compact('invites'));
+    }
+
+    public function showStatus()
+    {
+        $statusType = request('status');
+        if(strToLower($statusType) == 'success'){
+            $alertClass = 'alert-success';
+        }elseif(strToLower($statusType) == 'error'){
+            $alertClass = 'alert-danger';
+        }elseif(strToLower($statusType) == 'warning'){
+            $alertClass = 'alert-warning';
+        }else{
+            $alertClass = 'alert-info';
+        }
+        return view('info-page',compact('statusType', 'alertClass'));
     }
 }
