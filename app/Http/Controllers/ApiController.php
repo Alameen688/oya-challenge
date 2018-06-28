@@ -18,7 +18,7 @@ use Validator;
  * @package App\Http\Controllers
  *
  * @SWG\Swagger(
- *     basePath="/api/v1",
+ *     basePath="/api",
  *     host="localhost:8000",
  *     schemes={"http", "https"},
  *     @SWG\Info(
@@ -128,6 +128,8 @@ class ApiController extends Controller
         return new UserResource($result);
     }
 
+
+    
     public function createAdmin()
     {
         $validator = Validator::make(request()->all(), [
