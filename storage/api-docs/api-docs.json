@@ -1,0 +1,452 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "OyaChallenge API",
+        "description": "API documentation for Oyapay fullstack challenge",
+        "contact": {
+            "name": "Ogundiran Al-Ameen",
+            "email": "ogundiran12@gmail.com"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8000",
+    "basePath": "/api",
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "paths": {
+        "/invites": {
+            "get": {
+                "tags": [
+                    "Invites"
+                ],
+                "summary": "Get all invites",
+                "description": "Returns information of all invites that has been sent",
+                "operationId": "getAllInvites",
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "example": "success"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Invite"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/invites/pending": {
+            "get": {
+                "tags": [
+                    "Invites"
+                ],
+                "summary": "Get all pending invites",
+                "description": "Returns information of all pending invites",
+                "operationId": "getPendingInvites",
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "example": "success"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Invite"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/invites/completed": {
+            "get": {
+                "tags": [
+                    "Invites"
+                ],
+                "summary": "Get all completed invites",
+                "description": "Returns information of all completed invites",
+                "operationId": "getCompletedInvites",
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "example": "success"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/CompletedInvite"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/admin": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Get all admin accounts",
+                "description": "Returns information of all existing admin accounts",
+                "operationId": "getAdminUsers",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "example": "success"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Admin"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/find/admin/{phone_number}": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Get admin details by phone number",
+                "description": "Gets admin details using phone number and returns the info",
+                "operationId": "getAdminByPhone",
+                "parameters": [
+                    {
+                        "name": "phone_number",
+                        "in": "path",
+                        "description": "admin's phone number",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "example": "success"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Admin"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/agent": {
+            "get": {
+                "tags": [
+                    "Agent"
+                ],
+                "summary": "Get all agent accounts",
+                "description": "Returns information of all existing agent accounts",
+                "operationId": "getAgentUsers",
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "example": "success"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Agent"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/find/agent/{phone_number}": {
+            "get": {
+                "tags": [
+                    "Agent"
+                ],
+                "summary": "Get agent details by phone number",
+                "description": "Gets agent details using phone number and returns the info",
+                "operationId": "getAgentByPhone",
+                "parameters": [
+                    {
+                        "name": "phone_number",
+                        "in": "path",
+                        "description": "agent's phone number",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "example": "success"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/Agent"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/create": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Create a new admin account",
+                "description": "Registers a new user and returns details.",
+                "operationId": "createAdmin",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/NewAdmin"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "description": "Create a new admin account",
+                                    "example": "success"
+                                },
+                                "data": {
+                                    "description": "Create a new admin account",
+                                    "$ref": "#/definitions/Admin"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Agent": {
+            "required": [
+                "name",
+                "phone_number",
+                "business_name"
+            ],
+            "properties": {
+                "id": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "2"
+                },
+                "name": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "Sola Kayode"
+                },
+                "phone_number": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "08134021453"
+                },
+                "created_at": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "2018-06-28 14:26:08"
+                }
+            }
+        },
+        "Admin": {
+            "required": [
+                "name",
+                "phone_number",
+                "business_name"
+            ],
+            "properties": {
+                "id": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "2"
+                },
+                "name": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "Simi"
+                },
+                "phone_number": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "08134021453"
+                },
+                "business_name": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "Oyapay"
+                },
+                "created_at": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "2018-06-28 14:26:08"
+                }
+            }
+        },
+        "NewAdmin": {
+            "required": [
+                "name",
+                "phone_number",
+                "password",
+                "password_confirmation",
+                "business_name"
+            ],
+            "properties": {
+                "name": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "Simi"
+                },
+                "phone_number": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "08134021453"
+                },
+                "business_name": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "Oyapay"
+                },
+                "password": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "whatever"
+                },
+                "password_confirmation": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "whatever"
+                }
+            }
+        },
+        "Invite": {
+            "required": [
+                "name",
+                "phone_number",
+                "token",
+                "status"
+            ],
+            "properties": {
+                "id": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "2"
+                },
+                "name": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "Sola Kayode"
+                },
+                "phone_number": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "08134021453"
+                },
+                "token": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "$2y$10$uACQUstEGKVM7vlV6DvrN.NJFJqlE1nDIQ7gJUvJI8pe4Mnj49cAq"
+                },
+                "status": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "pending"
+                },
+                "created_at": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "2018-06-28 14:26:08"
+                }
+            }
+        },
+        "CompletedInvite": {
+            "required": [
+                "name",
+                "phone_number",
+                "token",
+                "status"
+            ],
+            "properties": {
+                "id": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "2"
+                },
+                "name": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "Osoko Biodun"
+                },
+                "phone_number": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "08134021453"
+                },
+                "token": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "$2y$10$uzYilYJX1y/Ey0EkOuwS.e6UoRjlbiW3my/my5J659g5RGUUBLNju"
+                },
+                "status": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "completed"
+                },
+                "created_at": {
+                    "description": "Class ApiController",
+                    "type": "string",
+                    "example": "2018-06-28 14:26:08"
+                }
+            }
+        }
+    }
+}
