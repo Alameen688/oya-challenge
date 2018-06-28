@@ -46,6 +46,26 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        
+
+        if ($exception instanceof  \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException) {
+            if($this->isApiCall($request)){
+                return response()->json(['status' => 'error', 'message' => 'Error! Method not allowed on this endpoint']);
+            }
+        }
+        elseif ($exception instanceof  \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+            if($this->isApiCall($request)){
+                return response()->json(['status' => 'error', 'message' => 'Oops! endpoint not found']);
+            }
+        }
+
+        
+        
         return parent::render($request, $exception);
+    }
+
+    protected function isApiCall($request)
+    {
+        return strpos($request->getUri(), '/api') !== false;
     }
 }
