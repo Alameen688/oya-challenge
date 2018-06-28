@@ -1,4 +1,4 @@
-# IPT WEB 
+# OyaChallenge 
 
 ## SETUP
 
@@ -13,7 +13,7 @@ composer install
 
 ENV.
 ---------------
-Make a copy of the ``.env.example`` file and rename to ``.env`` . This will contain all your environmental variables 
+Make a copy of the ``.env.example`` file and rename to ``.env`` . This will contain all the environmental variables 
 
 KEY.
 ---------------
@@ -31,7 +31,7 @@ DB
 ### How to setup db
 The project uses mysql database.
 
-Create a mysql database and name it oyachallenge
+Create a mysql database and name it ``oyachallenge``
 
 Fill in the  followiing credentials in the .env file
 ```env 
@@ -62,5 +62,27 @@ API
 ---------------
 ### How to access the api
 Api endpoints are listed in the swagger documentation which can be found by navigating to `http://127.0.0.1:8000/api/documentation`
+
+
+![api documentation](screenshots/api-docs.png "Api documentation")
+
+![admin registration](screenshots/admin-register.png "Admin registration page")
+
+![dashboard](screenshots/dashboard.png "Dashboard")
+
+![invite form](screenshots/invite-agent.png "Invite form")
+
+![agent form](screenshots/create-agent-form.png "Agent form")
+
+![already created agent](screenshots/already-created-agent.png "Already Created Agent")
+
+
+
+
+
+
+
+
+
 
 
