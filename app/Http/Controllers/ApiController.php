@@ -19,7 +19,7 @@ use Validator;
  *
  * @SWG\Swagger(
  *     basePath="/api",
- *     host="localhost:8000",
+ *     host="127.0.0.1:8000",
  *     schemes={"http", "https"},
  *     @SWG\Info(
  *         version="1.0",
