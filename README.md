@@ -64,6 +64,11 @@ API
 Api endpoints are listed in the swagger documentation which can be found by navigating to `http://127.0.0.1:8000/api/documentation`
 
 
+<hr>
+Screenshots
+---------------
+<hr>
+
 ![api documentation](screenshots/api-docs.png "Api documentation")
 
 ![admin registration](screenshots/admin-register.png "Admin registration page")
