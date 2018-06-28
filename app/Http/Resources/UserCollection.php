@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class Invite extends JsonResource
+class UserCollection extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,11 +15,11 @@ class Invite extends JsonResource
     public function toArray($request)
     {
         $status = 'success';
-        $data = $this['invites'];
+        $data = $this['users'];
         $message = '';
         if($data == null){
             $status = 'error';
-            $message = "Oops! invites is null"; 
+            $message = "Oops! admin account is null"; 
         }
         
         return [
@@ -31,5 +31,6 @@ class Invite extends JsonResource
                 'message' => $message,
             ]),
         ];
+
     }
 }

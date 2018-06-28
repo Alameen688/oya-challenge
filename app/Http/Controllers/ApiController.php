@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Invite;
 use App\User;
 use App\Http\Resources\User as UserResource;
+use App\Http\Resources\Invite as InviteResource;
+use App\Http\Resources\UserCollection;
 
 
 /**
@@ -44,28 +46,36 @@ class ApiController extends Controller
     {
         $invites = Invite::all();
         
-        return response()->json($invites);
+        $result['invites'] = $invites;
+        InviteResource::withoutWrapping();
+        return new InviteResource($result);
     }
 
     public function getPendingInvites()
     {
-        $invites = Invite::where('status','pending')->get();
+        $invites = Invite::where('status','pending')->latest()->get();
         
-        return response()->json($invites);
+        $result['invites'] = $invites;
+        InviteResource::withoutWrapping();
+        return new InviteResource($result);
     }
 
     public function getCompletedInvites()
     {
-        $invites = Invite::where('status','completed')->get();
+        $invites = Invite::where('status','completed')->latest()->get();
         
-        return response()->json($invites);
+        $result['invites'] = $invites;
+        InviteResource::withoutWrapping();
+        return new InviteResource($result);
     }
 
     public function getAdminUsers()
     {
-        $allAdmin = User::where('role', 'admin')->get(); 
-
-        return response()->json($allAdmin);
+        $allAdmin = User::where('role', 'admin')->latest()->get(); 
+        //dd($allAdmin);
+        $result['users'] = $allAdmin;
+        UserCollection::withoutWrapping();
+        return new UserCollection($result);
     }
 
     public function getAdminByPhone($phone)
@@ -89,9 +99,12 @@ class ApiController extends Controller
 
     public function getAgentUsers()
     {
-        $allAgent = User::where('role', 'agent')->get(); 
+        $allAgent = User::where('role', 'agent')->latest()->get(); 
 
-        return response()->json($allAgent);
+        $result['users'] = $allAgent;
+        UserCollection::withoutWrapping();
+
+        return new UserCollection($result);
     }
 
     public function getAgentByPhone($phone)
@@ -113,39 +126,7 @@ class ApiController extends Controller
         return new UserResource($result);
     }
 
-    public function createAdmin()
-    {
-        $admin = User::create([
-            'name' => request('name'),
-            'phone_number' => $phone,
-            'password' =>  Hash::make(request('password')),
-            'role' => 'admin',
-        ]);
-
-        return response()->json($admin);
-    }
-
-    public function updateInviteStatus()
-    {
-        $phone = request('phone_number');
-        //Hash::check($agentInvite->phone_number, $token)
-        $invite = Invite::where('phone_number', $phone)
-          ->update(['status' => 'completed']);
-
-          return response()->json($invite);
-    }
     
-    public function createAgent()
-    {
-        $agent = User::create([
-            'name' => request('name'),
-            'phone_number' => $phone,
-            'password' =>  Hash::make(request('password')),
-            'role' => 'agent',
-        ]);
-
-        return response()->json($agent);
-    }
 
 
 }
