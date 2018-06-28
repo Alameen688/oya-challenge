@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Invite;
 use App\User;
+use App\Http\Resources\User as UserResource;
+
 
 /**
  * Class ApiController
@@ -70,9 +72,19 @@ class ApiController extends Controller
     {
         $admin = User::where('role', 'admin')
                         ->where('phone_number', $phone)
-                        ->get(); 
+                        ->first(); 
 
-        return response()->json($admin);
+        if($admin == null){
+            $result['status'] = 'error';
+            $result['message'] = "Oops! admin account doesn't exist"; 
+        }else{
+            $result['status'] = 'success';
+            $result['user'] = $admin; 
+        }
+
+        UserResource::withoutWrapping();
+
+        return new UserResource($result);
     }
 
     public function getAgentUsers()
@@ -86,9 +98,19 @@ class ApiController extends Controller
     {
         $agent = User::where('role', 'agent')
                         ->where('phone_number', $phone)
-                        ->get(); 
+                        ->first(); 
+        
+        if($agent == null){
+            $result['status'] = 'error';
+            $result['message'] = "Oops! agent account doesn't exist"; 
+        }else{
+            $result['status'] = 'success';
+            $result['user'] = $agent; 
+        }
 
-        return response()->json($agent);
+        UserResource::withoutWrapping();
+
+        return new UserResource($result);
     }
 
     public function createAdmin()
@@ -103,7 +125,27 @@ class ApiController extends Controller
         return response()->json($admin);
     }
 
+    public function updateInviteStatus()
+    {
+        $phone = request('phone_number');
+        //Hash::check($agentInvite->phone_number, $token)
+        $invite = Invite::where('phone_number', $phone)
+          ->update(['status' => 'completed']);
+
+          return response()->json($invite);
+    }
     
+    public function createAgent()
+    {
+        $agent = User::create([
+            'name' => request('name'),
+            'phone_number' => $phone,
+            'password' =>  Hash::make(request('password')),
+            'role' => 'agent',
+        ]);
+
+        return response()->json($agent);
+    }
 
 
 }
