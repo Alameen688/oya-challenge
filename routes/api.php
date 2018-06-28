@@ -26,5 +26,6 @@ Route::get('/find/admin/{phone}', 'ApiController@getAdminByPhone');
 Route::get('/find/agent/{phone}', 'ApiController@getAgentByPhone');
 
 Route::post('/invite/complete', 'ApiController@updateInviteStatus');
+Route::post('/admin/create', 'ApiController@createAdmin');
 
 

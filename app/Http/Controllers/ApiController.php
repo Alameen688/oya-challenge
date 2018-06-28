@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Invite;
 use App\User;
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\Invite as InviteResource;
 use App\Http\Resources\UserCollection;
+use Validator;
 
 
 /**
@@ -126,7 +128,38 @@ class ApiController extends Controller
         return new UserResource($result);
     }
 
+    public function createAdmin()
+    {
+        $validator = Validator::make(request()->all(), [
+            'name' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:255|unique:users',
+            'business_name' => 'required|string|max:255',
+            'password_confirmation' => 'required|string|max:255',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+        if($validator->fails()){
+            return response()->json(['status' => 'error', 'data' => $validator->errors()]);
+        }
+        $admin = User::create([
+            'name' => request('name'),
+            'phone_number' => request('name'),
+            'password' =>  Hash::make(request('password')),
+            'business_name' => request('business_name'),
+            'role' => 'admin',
+        ]);
+
+        if(!$admin){
+            $result['status'] = 'error';
+            $result['message'] = "Unable to create admin account, try again later"; 
+        }else{
+            $result['status'] = 'success';
+            $result['user'] = $admin; 
+        }
+
+        UserResource::withoutWrapping();
+
+        return new UserResource($result);
+    }
+
     
-
-
 }
